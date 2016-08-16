@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Backbone.js Todos</title>
+  <link rel="stylesheet" href='css/todos.css'/>
+</head>
+
+<body>
+
+  <div id="todoapp">
+
+    <header>
+      <h1>General Structural Ordering</h1>
+      <input id="new-todo" type="text" placeholder="Enter Initial Matrix Size">
+    </header>
+
+    <section id="main">
+      <input id="toggle-all" type="checkbox">
+      <label for="toggle-all">Mark all as complete</label>
+      <ul id="todo-list"></ul>
+    </section>
+
+    <footer>
+      <a id="clear-completed">Clear completed</a>
+      <div id="todo-count"></div>
+    </footer>
+
+  </div>
+
+  <div id="instructions">
+    Please enter it initial matrix size.
+  </div>
+
+  <script src='js/bt3/namespace.js'></script>
+  <script src="js/lib/json2.js"></script>
+  <script src="js/lib/jquery.js"></script>
+  <script src="js/lib/underscore.js"></script>
+  <script src='js/bt3/config.js'></script>
+  <script src="js/lib/backbone.js"></script>
+  <script src="js/lib/backbone.localStorage.js"></script>
+  <script src='js/bt3/models/structure.js'></script>
+  <script src='js/bt3/collections/todoList.js'></script>
+  <script src='js/bt3/views/structureView.js'></script>
+  <script src='js/bt3/views/contentView.js'></script>
+  <script src='js/bt3/routers/router.js'></script>
+  <script src='js/bt3/todos.js'></script>
+
+  <!-- Templates -->
+
+  <script id="item" type="text/template">
+    <div class="view">
+      <input class="toggle" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+      <label><%- title %></label>
+      <a class="destroy"></a>
+    </div>
+    <input class="edit" type="text" value="<%- title %>" />
+  </script>
+
+  <script id="stats" type="text/template">
+    <% if (done) { %>
+      <a id="clear-completed">Clear <%= done %> completed <%= done == 1 ? 'item' : 'items' %></a>
+    <% } %>
+    <div class="todo-count"><b><%= remaining %></b> <%= remaining == 1 ? 'item' : 'items' %> left</div>
+  </script>
+
+  <script id='enterSize' type="text/html">
+		<div class="page-header">
+			<h4>Enter the initial matrix size.</h4>
+		</div>
+		<div class="row">
+			<div class="span14">
+        <form action='#enterData'>
+          <input id='enterSize-new-size' type="text" placeholder="Matrix Size">
+          <input type="submit" value='Enter System Data' />
+        </form> <br />
+			</div>
+	</script>
+
+	<script id='enterData' type="text/html">
+		<div id='enterDataPageHeader' class="page-header">
+			<h4>Enter System Structural Data</h4>
+		</div>
+    <div class="row">
+      <div id='enterDataMatrix' class='leftMatrixArea'>
+        <div id='enterDataInput' class='rightEntryArea'>
+          Same Level? <input id='same-level' type="text" placeholder='No'> <br /> <br />
+          Column Number: <input id='column-number' type="text" placeholder='X'> <br /> <br />
+          Row Number: <input id='row-number' type="text" placeholder='Y'> <br /> <br />
+          <div class="span14">
+            <button type='button' onclick='alert("Enter data here")'>Enter Data</button> <br /> <br />
+            <form action='#process'>
+              <input type="submit" value='Process System Data' />
+            </form>
+          </div>
+        </div>
+		  </div>
+    </div
+	</script>
+
+	<script id='process' type="text/html">
+		<div class="page-header">
+			<h2>Process System Data</h2>
+		</div>
+  </div>
+  Swap Column Number: <input id='swap-column-number' type="text" placeholder='Move-X'> <br /> <br />
+  Swap Row Number: <input id='swap-row-number' type="text" placeholder='Move-Y'> <br /> <br />
+  <div>
+		<div class="row">
+			<div class="span14">
+        <button type='button' onclick='alert("Process data here")'>Process Data</button> <br /> <br />
+        <form action='#enterData'>
+          <input type="submit" value='Enter System Data' />
+        </form>
+			</div>
+		</div>
+	</script>
+
+	<script id="not-found" type="text/html">
+		<div class="page-header">
+			<h1>404</h1>
+		</div>
+		<div class="row">
+			<div class="span14">
+        <form action='#enterSize'>
+          <input type="submit" value='Enter Size' />
+        </form> <br />
+        <form action='#enterData'>
+          <input type="submit" value='Enter System Data' />
+        </form> <br />
+        <form action='#process'>
+          <input type="submit" value='Process System Data' />
+        </form>
+				<p>
+					This is not the content you are looking for.
+				</p>
+			</div>
+		</div>
+	</script>
+  <!-- Init Application Router -->
+
+  <script type="text/javascript">
+    var router = new Bt3.Routers.Router($('#content'));
+    Backbone.history.start();
+  </script>
+
+  </body>
+</html>
